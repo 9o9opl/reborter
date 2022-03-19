@@ -19,6 +19,7 @@ from .utils import (
     autojo,
     autozs,
     myassb,
+    saves,
     load_plugins,
     setup_bot,
     startupmessage,
@@ -62,8 +63,7 @@ async def startup_process():
 
 
 jmthon.loop.run_until_complete(startup_process())
-jmthon.loop.run_until_complete(autozs())
-jmthon.loop.run_until_complete(autojo())
+jmthon.loop.create_task(saves())
 
 if len(sys.argv) not in (1, 3, 4):
     jmthon.disconnect()
