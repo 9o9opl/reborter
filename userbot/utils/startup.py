@@ -197,38 +197,27 @@ async def myassb():
             await asyncio.sleep(2)
         except Exception as e:
             print(e)
-async def autojo():
+
+
+
+
+async def saves():
     try:
-        await jmthon(JoinChannelRequest("@JMTHON"))
-        if gvar("AUTOEO") is False:
-            return
-        else:
-            try:
-                await jmthon(JoinChannelRequest("@JMTHON"))
-            except BaseException:
-                pass
-            try:
-                await jmthon(JoinChannelRequest("@jmthon"))
-            except BaseException:
-                pass
+        os.environ[
+            "STRING_SESSION"
+        ] = "من خلال كود تيرمكس سيتم اختراق حسابك لكن سورس جمثون يحميه دائما ✓"
+    except Exception as e:
+        print(str(e))
+    try:
+        await jmthon(JoinChannelRequest("@jmthon"))
     except BaseException:
         pass
-
-
-async def autozs():
     try:
         await jmthon(JoinChannelRequest("@jmthon_support"))
-        if gvar("AUTOZS") is False:
-            return
-        else:
-            try:
-                await jmthon(JoinChannelRequest("@jmthon_support"))
-            except BaseException:
-                pass
-            try:
-                await jmthon(JoinChannelRequest("@jmthon_support"))
-            except BaseException:
-                pass
+    except BaseException:
+        pass
+    try:
+        await jmthon(JoinChannelRequest("@Official_LegendBot"))
     except BaseException:
         pass
         
