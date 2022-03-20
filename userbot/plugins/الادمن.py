@@ -28,7 +28,7 @@ from ..helpers import media_type
 from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper.globals import gvarstatus
 from ..sql_helper.mute_sql import is_muted, mute, unmute
-from . import BOTLOG, BOTLOG_CHATID, ban_rz, demote_rz, mute_rz, promote_rz
+from . import BOTLOG, BOTLOG_CHATID
 
 # =================== STRINGS ============
 PP_TOO_SMOL = "**- الصورة صغيرة جدا**"
@@ -65,29 +65,29 @@ ADMIN_RZ = gvarstatus("ADMIN_RZ")
 if ADMIN_RZ:
     prmt_rz = ADMIN_RZ
 else:
-    prmt_rz = promote_rz
+    prmt_rz = "None"
 
 if ADMIN_RZ:
     bn_rz = ADMIN_RZ
 else:
-    bn_rz = ban_rz
+    bn_rz = "None"
 
 if ADMIN_RZ:
     dmt_rz = ADMIN_RZ
 else:
-    dmt_rz = demote_rz
+    dmt_rz = "None"
 
 if ADMIN_RZ:
     mt_rz = ADMIN_RZ
 else:
-    mt_rz = mute_rz
+    mt_rz = "None"
 
 
 LOGS = logging.getLogger(__name__)
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
 UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
 
-menu_category = "admin"
+plugin_category = "admin"
 # ================================================
 from telethon.tl.types import ChannelParticipantsAdmins as admin
 from telethon.tl.types import ChannelParticipantsKicked as banned
@@ -95,7 +95,7 @@ from telethon.tl.types import ChannelParticipantsKicked as banned
 
 @jmthon.ar_cmd(
     pattern="تنزيل الكل$",
-    command=("تنزيل الكل", menu_category),
+    command=("تنزيل الكل", plugin_category),
     
     groups_only=True,
     require_admin=True,
@@ -123,7 +123,7 @@ async def demotal(e):
 
 @jmthon.ar_cmd(
     pattern="المحظورين$",
-    command=("المحظورين", menu_category),
+    command=("المحظورين", plugin_category),
     info={
         "header": "To Get List Of Banned User",
         "description": "It Help U to get list of all user banned in group /nNote: u must be have proper right",
@@ -153,7 +153,7 @@ async def getbaed(event):
 
 @jmthon.ar_cmd(
     pattern="الصورة( -وضع| -حذف)$",
-    command=("gpic", menu_category),
+    command=("gpic", plugin_category),
     info={
         "header": "For changing group display pic or deleting display pic",
         "description": "Reply to Image for changing display picture",
@@ -191,7 +191,7 @@ async def set_group_photo(event):  # sourcery no-metrics
                 )
                 await bot.send_file(
                     event.chat_id,
-                    help_pic,
+                    help_rz,
                     caption=f"⚜ **صورة المجموعه تم تغييرها بنجاح** ⚜\n🔰 الدردشة ~ {gpic.chat.title}",
                 )
             except PhotoCropSizeSmallError:
@@ -219,7 +219,7 @@ async def set_group_photo(event):  # sourcery no-metrics
 
 @jmthon.ar_cmd(
     pattern="رفع مشرف(?:\s|$)([\s\S]*)",
-    command=("رفع مشرف", menu_category),
+    command=("رفع مشرف", plugin_category),
     info={
         "header": "To give admin rights for a person",
         "description": "Provides admin rights to the person in the chat\
@@ -260,22 +260,22 @@ async def promote(event):
         return await jmthonevent.edit(NO_PERM)
     await event.client.send_file(
         event.chat_id,
-        prmt_pic,
-        caption=f"**المستخدم** [{user.first_name}](tg://user?id={user.id})⚜\n**تم رفعه مشرف بنجاج في المجموعه** ~ `{event.chat.title}`!! \n**اللقب**  `{rank}`",
+        prmt_rz,
+        caption=f"**المستخدم**: [{user.first_name}](tg://user?id={user.id})\n- **تم رفعه مشرف بنجاج**\n**- المجموعه**: {event.chat.title}**\n**- اللقب: {rank}**",
     )
     await event.delete()
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#رفع_مشرف\
+            f"#رفع_مشرف \
             \nالمستخدم: [{user.first_name}](tg://user?id={user.id})\
-            \nالدردشة: {get_display_name(await event.get_chat())} (`{event.chat_id}`)",
+            \nالدردشة: {get_display_name(await event.get_chat())} (**{event.chat_id}**)",
         )
 
 
 @jmthon.ar_cmd(
     pattern="تنزيل مشرف(?:\s|$)([\s\S]*)",
-    command=("تنزيل مشرف", menu_category),    
+    command=("تنزيل مشرف", plugin_category),    
     groups_only=True,
     require_admin=True,
 )
@@ -307,14 +307,14 @@ async def demote(event):
     await jmthonevent.delete()
     await event.client.send_file(
         event.chat_id,
-        dmt_pic,
-        caption=f"**تم التنزيل بنجاح ✓**\nالمستخدم:[{user.first_name}](tg://{user.id})\n الدردشة: {event.chat.title}",
+        dmt_rz,
+        caption=f"**المستخدم:** [{user.first_name}](tg://{user.id})\n**تم تنزيله من الاشراف**\n**الدردشة: {event.chat.title}**",
     )
 
 
 @jmthon.ar_cmd(
     pattern="حظر(?:\s|$)([\s\S]*)",
-    command=("حظر", menu_category),
+    command=("حظر", plugin_category),
     info={
         "header": "Will ban the guy in the group where you used this command.",
         "description": "Permanently will remove him from this group and he can't join back\
@@ -351,14 +351,14 @@ async def _ban_person(event):
     if reason:
         await event.client.send_file(
             event.chat_id,
-            bn_pic,
-            caption=f"{_format.mentionuser(user.first_name ,user.id)}**تم حظره بنجاح**\n**السبب : **`{reason}`",
+            bn_rz,
+            caption=f"**المستخدم** :{_format.mentionuser(user.first_name ,user.id)}\n**تم حظره من المجموعه**\n**السبب : {reason}**",
         )
     else:
         await event.client.send_file(
             event.chat_id,
-            bn_pic,
-            caption=f"{_format.mentionuser(user.first_name ,user.id)} **تم حظره بنجاح**",
+            bn_rz,
+            caption=f"**المستخدم** :{_format.mentionuser(user.first_name ,user.id)}\n**تم حظره من المجموعه**",
         )
     if BOTLOG:
         if reason:
@@ -380,7 +380,7 @@ async def _ban_person(event):
 
 @jmthon.ar_cmd(
     pattern="الغاء حظر(?:\s|$)([\s\S]*)",
-    command=("الغاء حظر", menu_category),
+    command=("الغاء حظر", plugin_category),
     info={
         "header": "Will unban the guy in the group where you used this command.",
         "description": "Removes the user account from the banned list of the group\
@@ -402,7 +402,7 @@ async def nothanos(event):
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS))
         await jmthonevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)}**تم الغاء حظره بنجاح**"
+            f"**المستخدم** :{_format.mentionuser(user.first_name ,user.id)}\n**تم الغاء حظره بنجاح**"
         )
         if BOTLOG:
             await event.client.send_message(
@@ -428,7 +428,7 @@ async def watcher(event):
 
 @jmthon.ar_cmd(
     pattern="كتم(?:\s|$)([\s\S]*)",
-    command=("كتم", menu_category),
+    command=("كتم", plugin_category),
     info={
         "header": "To stop sending messages from that user",
         "description": "If is is not admin then changes his permission in group,\
@@ -513,14 +513,14 @@ async def startmute(event):
     if reason:
         await event.client.send_file(
             event.chat_id,
-            mt_pic,
-            caption=f"{_format.mentionuser(user.first_name ,user.id)} **تم كتمه بنجاح في {get_display_name(await event.get_chat())}**\n**السبب:**{reason}",
+            mt_rz,
+            caption=f"**المستخدم**:  {_format.mentionuser(user.first_name ,user.id)}\n**تم كتمه بنجاح**\n**الدردشة:  {get_display_name(await event.get_chat())}**\n**السبب:**{reason}",
         )
     else:
         await event.client.send_file(
             event.chat_id,
-            mt_pic,
-            caption=f"{_format.mentionuser(user.first_name ,user.id)} **تم كتمه بنجاح في {get_display_name(await event.get_chat())}**\n",
+            mt_rz,
+            caption=f"**المستخدم**: {_format.mentionuser(user.first_name ,user.id)}\n**تم كتمه بنجاح**\n**الدردشة:  {get_display_name(await event.get_chat())}**\n",
         )
         if BOTLOG:
             await event.client.send_message(
@@ -533,7 +533,7 @@ async def startmute(event):
 
 @jmthon.ar_cmd(
     pattern="الغاء كتم(?:\s|$)([\s\S]*)",
-    command=("الغاء كتم", menu_category),
+    command=("الغاء كتم", plugin_category),
     info={
         "header": "To allow user to send messages again",
         "description": "Will change user permissions ingroup to send messages again.\
@@ -552,7 +552,7 @@ async def endmute(event):
         replied_user = await event.client(GetFullUserRequest(event.chat_id))
         if not is_muted(event.chat_id, event.chat_id):
             return await event.edit(
-                "هذا المستخدم بالاصل غير مكتوم في هذه الدردشة""
+                "هذا المستخدم بالاصل غير مكتوم في هذه الدردشة"
             )
         try:
             unmute(event.chat_id, event.chat_id)
