@@ -10,6 +10,7 @@ import spamwatch as spam_watch
 from validators.url import url
 
 from .. import *
+from Jmthon.razan.resources.start import *
 from ..Config import Config
 from ..core.logger import logging
 from ..core.managers import edit_delete, edit_or_reply
@@ -38,6 +39,11 @@ USERID = jmthon.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 # mention user
 mention = f"[{Config.ALIVE_NAME}](tg://user?id={USERID})"
 hmention = f"<a href = tg://user?id={USERID}>{Config.ALIVE_NAME}</a>"
+
+ban_rz = "Jmthon/razan/resources/start/حظر.jpg"
+mute_rz = "Jmthon/razan/resources/start/كتم.jpg"
+promote_rz = "Jmthon/razan/resources/start/رفع.jpg"
+demote_rz = "Jmthon/razan/resources/start/تنزيل.jpg"
 
 PM_START = []
 PMMESSAGE_CACHE = {}
