@@ -16,6 +16,7 @@ cmdhd = Config.COMMAND_HAND_LER
 extractor = URLExtract()
 vlist = [
     "ALIVE_PIC",
+    "ADJM_PIC",
     "ALIVE_EMOJI",
     "ALIVE_TEMPLATE",
     "ALIVE_TEXT",
