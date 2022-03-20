@@ -267,7 +267,7 @@ async def promote(event):
     if BOTLOG:
         await event.client.send_message(
             BOTLOG_CHATID,
-            f"#رفع_مشرف"
+            f"#رفع_مشرف\
             \nالمستخدم: [{user.first_name}](tg://user?id={user.id})\
             \nالدردشة: {get_display_name(await event.get_chat())} (`{event.chat_id}`)",
         )
