@@ -28,7 +28,7 @@ from ..helpers import media_type
 from ..helpers.utils import _format, get_user_from_event
 from ..sql_helper.globals import gvarstatus
 from ..sql_helper.mute_sql import is_muted, mute, unmute
-from . import BOTLOG, BOTLOG_CHATID
+from . import BOTLOG, BOTLOG_CHATID, ban_rz, demote_rz, mute_rz, promote_rz 
 
 # =================== STRINGS ============
 PP_TOO_SMOL = "**- الصورة صغيرة جدا**"
@@ -61,26 +61,26 @@ UNBAN_RIGHTS = ChatBannedRights(
     embed_links=None,
 )
 
-ADMIN_RZ = gvarstatus("ADMIN_RZ")
-if ADMIN_RZ:
-    prmt_rz = ADMIN_RZ
+ADJM_PIC = gvarstatus("ADJM_PIC")
+if ADJM_PIC:
+    prmt_rz = ADJM_PIC
 else:
-    prmt_rz = "None"
+    prmt_rz = promote_rz
 
-if ADMIN_RZ:
-    bn_rz = ADMIN_RZ
+if ADJM_PIC:
+    bn_rz = ADJM_PIC
 else:
-    bn_rz = "None"
+    bn_rz = ban_rz
 
-if ADMIN_RZ:
-    dmt_rz = ADMIN_RZ
+if ADJM_PIC:
+    dmt_rz = ADJM_PIC
 else:
-    dmt_rz = "None"
+    dmt_rz = demote_rz
 
-if ADMIN_RZ:
-    mt_rz = ADMIN_RZ
+if ADJM_PIC:
+    mt_rz = ADJM_PIC
 else:
-    mt_rz = "None"
+    mt_rz = mute_rz
 
 
 LOGS = logging.getLogger(__name__)
